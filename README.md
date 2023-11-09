@@ -13,5 +13,5 @@
      - for activate env .\env\Scripts\activate.bat
    - ```python testdata.py```
 ###  You can see
-docs api .../docs
-admin api .../admin
+- docs api .../docs
+- admin api .../admin
