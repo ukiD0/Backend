@@ -1,8 +1,8 @@
 from datetime import datetime
-from lance import Boolean
 
-from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON
+from sqlalchemy import MetaData, Table, Column, Integer,Boolean, String, TIMESTAMP, ForeignKey, JSON
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
+
 Base: DeclarativeMeta = declarative_base()
 
 # class Role(Base):
