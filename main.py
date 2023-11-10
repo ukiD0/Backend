@@ -4,22 +4,26 @@ from pydantic import BaseModel, Field
 
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 from fastapi.encoders import jsonable_encoder
-from fastapi.exceptions import ValidationError
+from fastapi.exceptions import ValidationException
 from fastapi.responses import JSONResponse
+from .config import DB_NEW_HOST
 
 fake = Faker()
+
 app = FastAPI(
     title="Trading App"
 )
 
-@app.exception_handler(ValidationError)
-async def validation_exception_handler(request: Request, exc: ValidationError):
+#показывает пользователю ошибки которые происходят на сервере
+@app.exception_handler(ValidationException)
+async def validation_exception_handler(request: Request, exc: ValidationException):
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({"detail":exc.errors()}),
+        content=jsonable_encoder({"detail": exc.errors()}),
     )
+
 
 fake_users = [
     {"id":0, "role":"admin", "name":fake.name()},   
@@ -42,10 +46,10 @@ class User(BaseModel):
     id:int
     role:int
     name:str
-    degree: Optional[list[Degree]]
+    degree: Optional[List[Degree]] = []
 
 
-@app.get("/users/{user_id}",response_model=list[User])
+@app.get("/users/{user_id}",response_model=List[User])
 def get_user(user_id:int):
 #     for user in fake_users:
 #         print(user)
@@ -67,6 +71,6 @@ class Trade(BaseModel):
     amount: float
 
 @app.post("/trades")
-def add_trades(trades:list[Trade]):
+def add_trades(trades:List[Trade]):
     fake_trades.extend(trades)
     return{"status":200, "data": fake_trades}
