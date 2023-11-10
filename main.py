@@ -8,7 +8,7 @@ from typing import Optional, List
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import ValidationException
 from fastapi.responses import JSONResponse
-from .config import DB_NEW_HOST
+
 
 fake = Faker()
 

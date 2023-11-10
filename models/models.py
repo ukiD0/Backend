@@ -1,4 +1,5 @@
 from datetime import datetime
+from lance import Boolean
 
 from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
@@ -13,16 +14,16 @@ Base: DeclarativeMeta = declarative_base()
 
 metadata = MetaData()
 
-roles = Table(
-    "roles",
+role = Table(
+    "role",
     metadata,
     Column("id", Integer, primary_key=True),
     Column("name", String, nullable=False),
     Column("permissions", JSON),
 )
 
-users = Table(
-    "users",
+user = Table(
+    "user",
     metadata,
     Column("id", Integer, primary_key=True),
     Column("email", String, nullable=False),
@@ -30,5 +31,8 @@ users = Table(
     Column("password", String, nullable=False),
     #utcnow хранит время по конкретному часовому поясу
     Column("registered_at", TIMESTAMP, default = datetime.utcnow),
-    Column("role_id", Integer, ForeignKey("roles.id")),
+    Column("role_id", Integer, ForeignKey(role.c.id)),
+    Column("is_active", Boolean, default=True,nullable=True),
+    Column("is_superuser",Boolean,default=False,nullable=False),
+    Column("is_verified",Boolean,default=False, nullable=False),
 )
