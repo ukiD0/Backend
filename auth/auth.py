@@ -1,7 +1,7 @@
 from fastapi_users.authentication import CookieTransport, AuthenticationBackend
 from fastapi_users.authentication import JWTStrategy
 
-cookie_transport = CookieTransport(cookie_name="bonds",cooli_max_age = 3600)
+cookie_transport = CookieTransport(cookie_name="bonds",cookie_max_age = 3600)
 
 SECRET = "SECRET"
 #нужно будет в файл env и изменить  и в конфиг импортировать ~23-25min 5 les
