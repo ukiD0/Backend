@@ -10,7 +10,8 @@ from sqlalchemy.pool import NullPool
 
 from src.database import get_async_session
 from src.database import metadata 
-from src.config import *
+from src.config import (DB_HOST_TEST, DB_NAME_TEST, DB_PASS_TEST, DB_PORT_TEST,
+                        DB_USER_TEST)
 from src.main import app
 
 # DATABASE
