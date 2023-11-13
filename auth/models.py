@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON, Boolean, MetaData
 # from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from src.database import Base
+from src.database import Base, metadata
 
 
 # Base: DeclarativeMeta = declarative_base()
@@ -13,8 +13,6 @@ from src.database import Base
 #     id = Column(Integer, primary_key=True)
 #     name = Column(String, nullable=False)
 #     permissions = Column(String)
-
-metadata = MetaData()
 
 role = Table(
     "role",
