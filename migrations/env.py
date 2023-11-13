@@ -12,7 +12,7 @@ sys.path.append(os.path.join(sys.path[0],'src'))
 # from config import *
 # from models import metadata
 from src.config import *
-from src.auth.models import metadata as metadata_auth
+from auth.models import metadata as metadata_auth
 from src.operations.models import metadata as metadata_operations
 
 # this is the Alembic Config object, which provides
