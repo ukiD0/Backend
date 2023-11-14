@@ -4,6 +4,8 @@ from sqlalchemy import insert, select
 from auth.models import role
 from conftest import client, async_session_maker
 
+import sqlite3
+
 
 async def test_add_role():
     async with async_session_maker() as session:

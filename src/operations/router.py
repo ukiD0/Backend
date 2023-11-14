@@ -21,7 +21,7 @@ def get_long_op():
     time.sleep(2)
     return "Много много данных, которые вычислялись сто лет"
 
-@router.get("")
+@router.get("/")
 async def get_specific_operations(operation_type: str, session: AsyncSession = Depends(get_async_session)):
 #endpoint всегда должен иметь try except,также стоит обрабатывать отдельные ошибки(частный случай)
     try:
@@ -31,7 +31,7 @@ async def get_specific_operations(operation_type: str, session: AsyncSession = D
         #лучше писать "шаблон" как минимум из-за suc чтобы на фронте было чтот обрабатывать
         return {
             "status": "success",
-            "data": result.all(),
+            "data": result.scalars(),
             "details": None,
             }
     # except ZeroDivisionError:
@@ -51,7 +51,7 @@ async def get_specific_operations(operation_type: str, session: AsyncSession = D
 
 @router.post("/")
 async def add_specific_operations(new_operation: OperationCreate, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(operation).values(**new_operation.dict())
+    stmt = insert(operation).values(**dict(new_operation))
     await session.execute(stmt)
     await session.commit()
     return {"status": "success"}

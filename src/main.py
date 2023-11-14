@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 
@@ -29,6 +30,10 @@ app.include_router(router_operation)
 app.include_router(router_tasks)
 
 #startup shurdown fun при открытии и закрытии соответственно
+@app.get("/")
+async def redirect_from_main():
+    return RedirectResponse("/docs")
+
 @app.on_event("startup")
 async def startup_event():
     redis = aioredis.from_url("redis://localhost",encoding = "utf8",decode_responses = True)

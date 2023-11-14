@@ -28,7 +28,7 @@ user = Table(
     Column("id", Integer, primary_key=True),
     Column("email", String, nullable=False),
     Column("username", String, nullable=False),
-    Column("password", String, nullable=False),
+    Column("hashed_password", String, nullable=False),
     #utcnow хранит время по конкретному часовому поясу
     Column("registered_at", TIMESTAMP, default = datetime.utcnow),
     Column("role_id", Integer, ForeignKey(role.c.id)),

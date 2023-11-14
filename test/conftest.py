@@ -10,6 +10,7 @@ from sqlalchemy.pool import NullPool
 
 from src.database import get_async_session
 from src.database import metadata 
+
 from src.config import (DB_HOST_TEST, DB_NAME_TEST, DB_PASS_TEST, DB_PORT_TEST,
                         DB_USER_TEST)
 from src.main import app
@@ -53,5 +54,5 @@ client = TestClient(app)
 #суть клиентных менеджеров в том чтобы после прогона теста они закрывались
 @pytest.fixture(scope="session")
 async def ac() -> AsyncGenerator[AsyncClient, None]:
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(app=app, base_url="http://127.0.0.1:8000") as ac:
         yield ac
