@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 from pydantic import BaseModel
 
@@ -8,5 +8,5 @@ class OperationCreate(BaseModel):
     quantity: str
     figi: str
     instrument_type: str
-    date: datetime
+    date: date
     type: str

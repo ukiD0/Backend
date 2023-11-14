@@ -5,15 +5,6 @@ from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, ForeignKey, JS
 # from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from src.database import Base, metadata
 
-
-# Base: DeclarativeMeta = declarative_base()
-# class Role(Base):
-#     __tablename__ = "roles"
-
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String, nullable=False)
-#     permissions = Column(String)
-
 role = Table(
     "role",
     metadata,
