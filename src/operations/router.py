@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi_cache.decorator import cache
 from src.database import get_async_session
-from .models import operation
+from .models import operation, Operation
 from .schemas import OperationCreate
 
 router = APIRouter(
@@ -21,19 +21,19 @@ def get_long_op():
     time.sleep(2)
     return "Много много данных, которые вычислялись сто лет"
 
-@router.get("/")
-async def get_specific_operations(operation_type: str, session: AsyncSession = Depends(get_async_session)):
+@router.get("/", response_model=list[OperationCreate])
+async def get_specific_operations(operation_type: str = None, session: AsyncSession = Depends(get_async_session)):
 #endpoint всегда должен иметь try except,также стоит обрабатывать отдельные ошибки(частный случай)
     try:
-        query = select(operation).where(operation.c.type == operation_type)
+        print(operation_type)
+        if operation_type is None or operation_type == "all":
+            query = select(Operation)
+        else:
+            query = select(Operation).where(Operation.type == operation_type)
         result = await session.execute(query)
         # x = 1/0
         #лучше писать "шаблон" как минимум из-за suc чтобы на фронте было чтот обрабатывать
-        return {
-            "status": "success",
-            "data": result.scalars(),
-            "details": None,
-            }
+        return result.scalars()
     # except ZeroDivisionError:
     #     raise HTTPException(status_code = 500, detail ={
     #         "status":"error",
