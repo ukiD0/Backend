@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
+from fastapi.middleware.cors import CORSMiddleware
 
 from redis import asyncio as aioredis
 from auth.base_config import auth_backend, fastapi_users
@@ -28,6 +29,22 @@ app.include_router(
 
 app.include_router(router_operation)
 app.include_router(router_tasks)
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+     # обрабатывает запрос перед тем как придет на сервер 
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    # все необходимые методы прописывать
+    allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+                   "Authorization"],
+)
+
 
 #startup shurdown fun при открытии и закрытии соответственно
 @app.get("/")
